@@ -16,7 +16,6 @@ async function request(url, options = {}) {
     if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
     }
-
     // DELETE may return an empty response body.
     if (response.status === 204) {
         return { data: null, status: response.status };
@@ -99,3 +98,59 @@ async function loadNotes() {
 }
 
 loadButton.addEventListener("click", loadNotes);
+
+async function createNote(event) {
+    event.preventDefault();
+
+    const title = titleInput.value.trim();
+    const body = bodyInput.value.trim();
+
+    if (!title) {
+        showStatus("Please enter a note title.", "error");
+        titleInput.focus();
+        return;
+    }
+    if (title.length > 100) {
+        showStatus("The title cannot exceed 100 characters.", "error");
+        titleInput.focus();
+        return;
+    }
+
+    submitButton.disabled = true;
+    showStatus("Creating note...");
+
+    try {
+        const result = await request(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title,
+                body,
+                userId: 1
+            })
+        });
+
+        const newNote = result.data;
+
+        notes.unshift(newNote);
+        renderNotes();
+
+        showStatus(
+            `Note created (status ${result.status}, id ${newNote.id}).`,
+            "success"
+        );
+
+        noteForm.reset();
+    } catch (error) {
+        showStatus(
+            "Sorry, your note could not be created. Please try again.",
+            "error"
+        );
+    } finally {
+        submitButton.disabled = false;
+    }
+}
+
+noteForm.addEventListener("submit", createNote);
