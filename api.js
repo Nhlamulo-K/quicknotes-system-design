@@ -154,3 +154,37 @@ async function createNote(event) {
 }
 
 noteForm.addEventListener("submit", createNote);
+
+async function deleteNote(id, deleteButton) {
+    const noteExists = notes.some((note) => note.id === id);
+
+    if (!noteExists) {
+        showStatus("This note is no longer in the list.", "error");
+        return;
+    }
+
+    deleteButton.disabled = true;
+    showStatus("Deleting note...");
+
+    try {
+        const result = await request(`${API_URL}/${id}`, {
+            method: "DELETE"
+        });
+
+        notes = notes.filter((note) => note.id !== id);
+
+        renderNotes();
+
+        showStatus(
+            `Note ${id} deleted successfully (status ${result.status}).`,
+            "success"
+        );
+    } catch (error) {
+        showStatus(
+            "Sorry, the note could not be deleted. Please try again.",
+            "error"
+        );
+    } finally {
+        deleteButton.disabled = false;
+    }
+}
