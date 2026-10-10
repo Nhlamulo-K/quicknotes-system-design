@@ -1,0 +1,131 @@
+:root {
+    font-family: Arial, sans-serif;
+    color: #222;
+    background: #f4f6f9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    line-height: 1.6;
+}
+
+header,
+footer {
+    padding: 20px;
+    text-align: center;
+    background: #263a59;
+    color: white;
+}
+
+main {
+    width: min(900px, 92%);
+    margin: 30px auto;
+}
+
+section {
+    margin-bottom: 25px;
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #00000012;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font: inherit;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    background: #245bb5;
+    color: white;
+    cursor: pointer;
+    font: inherit;
+}
+
+button:hover:not(:disabled) {
+    background: #193f80;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#status {
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+#status.success {
+    color: #176b36;
+}
+
+#status.error {
+    color: #b42318;
+}
+
+#notes-list {
+    padding: 0;
+    list-style: none;
+}
+
+.note-card {
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+}
+
+.note-card h3 {
+    margin-top: 0;
+}
+
+.delete-btn {
+    background: #b42318;
+}
+
+.delete-btn:hover:not(:disabled) {
+    background: #8f1c14;
+}
+
+.empty-state {
+    padding: 16px;
+    color: #666;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    main {
+        width: 95%;
+    }
+
+    section {
+        padding: 16px;
+    }
+
+    button {
+        max-width: 100%;
+    }
+}
